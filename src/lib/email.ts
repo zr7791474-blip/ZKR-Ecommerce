@@ -1,6 +1,8 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 type EmailOptions = {
   to: string | string[];
@@ -10,6 +12,11 @@ type EmailOptions = {
 };
 
 export async function sendEmail({ to, subject, html, text }: EmailOptions) {
+  if (!resend) {
+    console.warn('RESEND_API_KEY is missing. Email skipped.');
+    return { success: false, error: 'Email service not configured' };
+  }
+
   try {
     const { data, error } = await resend.emails.send({
       from: process.env.EMAIL_FROM || 'ZKR E-Commerce <noreply@zkrstore.com>',
