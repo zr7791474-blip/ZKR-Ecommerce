@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Package, Search, Loader2 } from 'lucide-react';
+import { Package, Search, Loader2, Check, Truck, Home, XCircle } from 'lucide-react';
 
 import { trackOrderPublic } from '@/services/order.service';
 import { formatPrice } from '@/lib/utils';
@@ -12,6 +12,58 @@ import { Card, CardContent } from '@/components/ui/card';
 import { OrderStatusBadge } from '@/components/ecommerce/order-status-badge';
 
 type TrackedOrder = Awaited<ReturnType<typeof trackOrderPublic>>;
+
+const TIMELINE_STAGES = [
+  { key: 'PENDING', label: 'Order Placed', icon: Package },
+  { key: 'CONFIRMED', label: 'Payment Confirmed', icon: Check },
+  { key: 'PROCESSING', label: 'Processing', icon: Package },
+  { key: 'SHIPPED', label: 'Shipped', icon: Truck },
+  { key: 'DELIVERED', label: 'Delivered', icon: Home },
+];
+
+function OrderTimeline({ status }: { status: string }) {
+  if (status === 'CANCELLED' || status === 'REFUNDED' || status === 'FAILED') {
+    return (
+      <div className="flex items-center gap-3 rounded-xl border border-accent/20 bg-accent/5 px-4 py-3">
+        <XCircle className="w-5 h-5 text-accent shrink-0" />
+        <p className="text-sm text-foreground">
+          This order was {status.toLowerCase()} and is not progressing through fulfillment.
+        </p>
+      </div>
+    );
+  }
+
+  const currentIndex = TIMELINE_STAGES.findIndex((s) => s.key === status);
+
+  return (
+    <div className="flex items-start justify-between">
+      {TIMELINE_STAGES.map((stage, i) => {
+        const done = currentIndex >= 0 && i <= currentIndex;
+        const isLast = i === TIMELINE_STAGES.length - 1;
+
+        return (
+          <div key={stage.key} className="flex-1 flex flex-col items-center text-center relative">
+            {!isLast && (
+              <div
+                className={`absolute top-4 left-1/2 w-full h-[2px] ${done && i < currentIndex ? 'bg-primary' : 'bg-border'}`}
+              />
+            )}
+            <div
+              className={`relative z-10 h-8 w-8 rounded-full flex items-center justify-center border-2 ${
+                done ? 'bg-primary border-primary text-primary-foreground' : 'bg-background border-border text-muted-foreground'
+              }`}
+            >
+              <stage.icon className="w-3.5 h-3.5" />
+            </div>
+            <span className={`mt-2 text-[11px] font-medium ${done ? 'text-foreground' : 'text-muted-foreground'}`}>
+              {stage.label}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function TrackOrderPage() {
   const [orderNumber, setOrderNumber] = useState('');
@@ -35,6 +87,10 @@ export default function TrackOrderPage() {
       setLoading(false);
     }
   };
+
+  const estimatedDelivery = order
+    ? new Date(new Date(order.createdAt).getTime() + 5 * 24 * 60 * 60 * 1000)
+    : null;
 
   return (
     <div className="container mx-auto px-4 py-16 max-w-2xl">
@@ -93,7 +149,7 @@ export default function TrackOrderPage() {
 
       {order && (
         <Card className="border-border/60 mt-6">
-          <CardContent className="pt-6 space-y-4">
+          <CardContent className="pt-6 space-y-6">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div>
                 <p className="font-semibold text-foreground">Order #{order.orderNumber}</p>
@@ -107,6 +163,25 @@ export default function TrackOrderPage() {
                 </p>
               </div>
               <OrderStatusBadge status={order.status} />
+            </div>
+
+            <OrderTimeline status={order.status} />
+
+            <div className="grid sm:grid-cols-2 gap-3">
+              {order.trackingNumber && (
+                <div className="rounded-xl bg-secondary/50 border border-border/60 px-4 py-3">
+                  <p className="text-xs text-muted-foreground">Tracking Number</p>
+                  <p className="text-sm font-medium text-foreground">{order.trackingNumber}</p>
+                </div>
+              )}
+              {estimatedDelivery && order.status !== 'DELIVERED' && order.status !== 'CANCELLED' && (
+                <div className="rounded-xl bg-secondary/50 border border-border/60 px-4 py-3">
+                  <p className="text-xs text-muted-foreground">Estimated Delivery</p>
+                  <p className="text-sm font-medium text-foreground">
+                    {estimatedDelivery.toLocaleDateString(undefined, { month: 'long', day: 'numeric' })}
+                  </p>
+                </div>
+              )}
             </div>
 
             <div className="border-t border-border pt-4 space-y-3">
@@ -132,3 +207,4 @@ export default function TrackOrderPage() {
     </div>
   );
 }
+

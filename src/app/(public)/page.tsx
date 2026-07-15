@@ -1,14 +1,36 @@
 import type { Metadata } from "next";
 import Link from 'next/link';
-import { ArrowRight, Truck, Shield, RefreshCw, Headphones, Star } from 'lucide-react';
+import { ArrowRight, Truck, Shield, RefreshCw, Headphones, Star, Users, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ProductCard } from '@/components/ecommerce/product-card';
 import { HeroShowcase } from '@/components/ecommerce/hero-showcase';
+import { BrandMarquee } from '@/components/ecommerce/brand-marquee';
+import { FlashDeals } from '@/components/ecommerce/flash-deals';
+import { FaqAccordion } from '@/components/legal/faq-accordion';
 import { getFeaturedProducts, getNewArrivals, getBestSellers } from '@/services/product.service';
 import { getDemoProducts, pickDemoProducts } from '@/lib/demo-products';
 import { formatPrice, calculateDiscount } from '@/lib/utils';
+
+const homeFaqs = [
+  {
+    question: 'How long does shipping take?',
+    answer: 'Standard shipping typically takes 3-5 business days. Express options are available at checkout.',
+  },
+  {
+    question: 'What is your return policy?',
+    answer: 'Most items can be returned within 30 days of delivery for a full refund, unused and in original packaging.',
+  },
+  {
+    question: 'Is my payment information secure?',
+    answer: 'Yes — all payments are processed through Stripe, a PCI-compliant payment processor. We never store your card details.',
+  },
+  {
+    question: 'Do I need an account to order?',
+    answer: 'Yes, a free account keeps your order history, wishlist, and returns all in one place.',
+  },
+];
 
 export const metadata: Metadata = {
   title: "ZKR E-Commerce — Premium E-Commerce",
@@ -56,6 +78,15 @@ export default async function HomePage() {
     }),
   ].slice(0, 8);
 
+  // Flash Deals: only products with a genuine discount (compareAtPrice
+  // higher than the current price) — no fabricated "sale" badges on
+  // full-price items.
+  const allCandidates = [...(featured as any[]), ...(newArrivals as any[]), ...(bestSellers as any[]), ...getDemoProducts()];
+  const flashDealsProducts = allCandidates
+    .filter((p, i, arr) => arr.findIndex((x) => x.id === p.id) === i)
+    .filter((p) => p.compareAtPrice && Number(p.compareAtPrice) > Number(p.price))
+    .slice(0, 4);
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -71,7 +102,7 @@ export default async function HomePage() {
               New Collection 2026
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-[-0.03em] leading-[1.02] text-foreground">
               Shop the Future,
               <br />
               <span className="gradient-text">Today</span>
@@ -92,11 +123,13 @@ export default async function HomePage() {
               </Button>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-6">
+            <div className="flex flex-wrap items-center justify-center gap-2.5 pt-6">
               {[
-                { icon: Truck, label: 'Free shipping $100+' },
-                { icon: Shield, label: 'Secure payments' },
-                { icon: Star, label: 'Trusted by 10k+ customers' },
+                { icon: Users, label: '50K+ Happy Customers' },
+                { icon: Star, label: '4.9★ Average Rating' },
+                { icon: Truck, label: 'Fast Worldwide Shipping' },
+                { icon: Shield, label: 'Secure Payments' },
+                { icon: BadgeCheck, label: 'Money Back Guarantee' },
               ].map((badge) => (
                 <div
                   key={badge.label}
@@ -115,6 +148,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <BrandMarquee />
 
       {/* Features */}
       <section className="py-16 border-y border-foreground/[0.06]">
@@ -236,6 +271,8 @@ export default async function HomePage() {
         </section>
       )}
 
+      <FlashDeals products={flashDealsProducts} />
+
       {/* Testimonials */}
       <section className="py-20 border-y border-foreground/[0.06]">
         <div className="container mx-auto px-4">
@@ -265,6 +302,20 @@ export default async function HomePage() {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-foreground">Frequently Asked Questions</h2>
+            <p className="text-muted-foreground mt-2">
+              Have more questions?{' '}
+              <Link href="/faq" className="text-primary hover:underline">See all FAQs</Link>
+            </p>
+          </div>
+          <FaqAccordion items={homeFaqs} />
         </div>
       </section>
 

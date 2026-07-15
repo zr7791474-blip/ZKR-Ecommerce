@@ -13,16 +13,21 @@ import {
   Mail,
   User,
   LogOut,
+  Heart,
+  Sun,
+  Moon,
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { signOut } from 'next-auth/react';
+import { useTheme } from 'next-themes';
 
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/products', label: 'Products', icon: ShoppingBag },
   { href: '/categories', label: 'Categories', icon: Tag },
+  { href: '/account/wishlist', label: 'Wishlist', icon: Heart },
   { href: '/blog', label: 'Blog', icon: BookOpen },
   { href: '/about', label: 'About', icon: Info },
   { href: '/contact', label: 'Contact', icon: Mail },
@@ -39,6 +44,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
   const router = useRouter();
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
 
   const navigate = (href: string) => {
     onClose();
@@ -157,6 +163,14 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             {/* FOOTER ACTIONS */}
             <div className="p-4 border-t border-foreground/[0.08] space-y-2">
 
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              </Button>
 
               <Button
                 variant="outline"
@@ -173,9 +187,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 variant="ghost"
                 className="
                   w-full justify-start
-                  text-red-400
-                  hover:text-red-400
-                  hover:bg-red-500/10
+                  text-accent
+                  hover:text-accent
+                  hover:bg-accent/10
                 "
                 onClick={() =>
                   signOut({

@@ -7,6 +7,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { WishlistSync } from "@/components/providers/wishlist-sync";
 
 import { Navbar } from "@/components/layout/navbar";
+import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -82,6 +83,7 @@ export default function RootLayout({
                 <div className="absolute top-1/3 -right-40 h-[500px] w-[500px] rounded-full bg-accent/[0.04] dark:bg-primary/[0.15] blur-[120px]" />
               </div>
 
+              <ScrollProgress />
               <Navbar />
 
               <main className="pt-[68px] min-h-screen">

@@ -124,6 +124,10 @@ const config: Config = {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-4px)' },
         },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -139,6 +143,7 @@ const config: Config = {
         float: 'float 6s ease-in-out infinite',
         'spin-slow': 'spin-slow 8s linear infinite',
         bounce: 'bounce 1s ease-in-out infinite',
+        marquee: 'marquee 28s linear infinite',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

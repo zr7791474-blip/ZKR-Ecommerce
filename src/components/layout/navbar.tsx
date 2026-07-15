@@ -137,7 +137,7 @@ export function Navbar() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="rounded-full bg-foreground/[0.03] border border-foreground/[0.08] hover:bg-foreground/[0.08]"
+                  className="hidden sm:inline-flex rounded-full bg-foreground/[0.03] border border-foreground/[0.08] hover:bg-foreground/[0.08]"
                   onClick={() =>
                     setTheme(theme === 'dark' ? 'light' : 'dark')
                   }
@@ -150,7 +150,7 @@ export function Navbar() {
                 </Button>
               )}
 
-              <Link href="/account/wishlist">
+              <Link href="/account/wishlist" className="hidden sm:block">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -204,7 +204,9 @@ export function Navbar() {
                 </Button>
               )}
 
-              <ProfileDropdown />
+              <div className="hidden sm:block">
+                <ProfileDropdown />
+              </div>
 
               <Button
                 variant="ghost"
