@@ -46,20 +46,24 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30 p-4">
+    <div className="relative min-h-screen flex items-center justify-center bg-secondary/40 p-4 overflow-hidden">
+      <div className="absolute -top-40 left-1/3 h-[400px] w-[400px] rounded-full bg-primary/[0.08] blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 h-[300px] w-[300px] rounded-full bg-accent/[0.06] blur-[100px] pointer-events-none" />
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
+        className="relative w-full max-w-md"
       >
-        <Card className="backdrop-blur-xl bg-background/80 border-border/50 shadow-2xl">
-          <CardHeader className="text-center space-y-2">
-            <div className="mx-auto w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+        <Card className="border-border/60 shadow-premium">
+          <CardHeader className="text-center space-y-3">
+            <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white font-bold text-2xl shadow-premium">
               Z
             </div>
+            <p className="text-[11px] font-semibold tracking-widest uppercase text-warm">Premium Shopping Experience</p>
             <CardTitle className="text-2xl font-bold">Create account</CardTitle>
-            <CardDescription>Join ZKR Store and start shopping</CardDescription>
+            <CardDescription>Join ZKR E-Commerce and start shopping</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

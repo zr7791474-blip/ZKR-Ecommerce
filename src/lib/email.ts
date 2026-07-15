@@ -12,7 +12,7 @@ type EmailOptions = {
 export async function sendEmail({ to, subject, html, text }: EmailOptions) {
   try {
     const { data, error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'ZKR Store <noreply@zkrstore.com>',
+      from: process.env.EMAIL_FROM || 'ZKR E-Commerce <noreply@zkrstore.com>',
       to: Array.isArray(to) ? to : [to],
       subject,
       html,
@@ -36,12 +36,12 @@ export async function sendVerificationEmail(email: string, token: string) {
   
   return sendEmail({
     to: email,
-    subject: 'Verify your ZKR Store account',
+    subject: 'Verify your ZKR E-Commerce account',
     html: `
       <div style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #0f172a;">Welcome to ZKR Store!</h1>
+        <h1 style="color: #0f172a;">Welcome to ZKR E-Commerce!</h1>
         <p>Click the button below to verify your email address:</p>
-        <a href="${url}" style="display: inline-block; padding: 12px 24px; background: #6366f1; color: white; text-decoration: none; border-radius: 8px; margin: 16px 0;">
+        <a href="${url}" style="display: inline-block; padding: 12px 24px; background: #1F6590; color: white; text-decoration: none; border-radius: 8px; margin: 16px 0;">
           Verify Email
         </a>
         <p style="color: #64748b; font-size: 14px;">This link expires in 24 hours.</p>
@@ -56,12 +56,12 @@ export async function sendPasswordResetEmail(email: string, token: string) {
   
   return sendEmail({
     to: email,
-    subject: 'Reset your ZKR Store password',
+    subject: 'Reset your ZKR E-Commerce password',
     html: `
       <div style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #0f172a;">Password Reset Request</h1>
         <p>Click the button below to reset your password:</p>
-        <a href="${url}" style="display: inline-block; padding: 12px 24px; background: #6366f1; color: white; text-decoration: none; border-radius: 8px; margin: 16px 0;">
+        <a href="${url}" style="display: inline-block; padding: 12px 24px; background: #1F6590; color: white; text-decoration: none; border-radius: 8px; margin: 16px 0;">
           Reset Password
         </a>
         <p style="color: #64748b; font-size: 14px;">This link expires in 1 hour.</p>

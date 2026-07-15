@@ -4,6 +4,7 @@ import { ShoppingCart, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cart.store';
+import { useRequireAuth } from '@/hooks/use-require-auth';
 import { toast } from 'sonner';
 
 type Props = {
@@ -24,10 +25,15 @@ export function AddToCartButton({
   disabled = false,
 }: Props) {
   const addItem = useCartStore((state) => state.addItem);
+  const requireAuth = useRequireAuth();
   const [loading, setLoading] = useState(false);
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
+
+    if (loading) return;
+
+    if (!requireAuth('add items to your cart')) return;
 
     // 🔥 HARD GUARD (prevents 404 forever)
     if (!productSlug) {

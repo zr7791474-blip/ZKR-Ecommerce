@@ -17,6 +17,12 @@ const publicPaths = [
   '/faq',
   '/privacy',
   '/terms',
+  '/cookies',
+  '/shipping',
+  '/returns',
+  '/track-order',
+  '/help',
+  '/careers',
 ];
 
 const adminPaths = ['/admin'];

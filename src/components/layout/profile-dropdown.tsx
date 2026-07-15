@@ -37,7 +37,6 @@ export function ProfileDropdown() {
         <Button
           variant="default"
           size="sm"
-          className="shadow-soft"
         >
           Sign in
         </Button>
@@ -66,9 +65,11 @@ export function ProfileDropdown() {
             w-9
             cursor-pointer
             ring-2
-            ring-transparent
-            hover:ring-border
+            ring-foreground/10
+            hover:ring-primary/50
             transition-all
+            duration-300
+            hover:shadow-glow
           "
         >
 
@@ -95,7 +96,7 @@ export function ProfileDropdown() {
 
 
       <DropdownMenuContent
-        className="w-60 rounded-xl p-1.5 shadow-xl"
+        className="w-60 rounded-2xl p-1.5 glass shadow-premium"
         align="end"
         forceMount
       >

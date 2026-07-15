@@ -2,22 +2,21 @@
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
-const data = [
-  { name: 'Jan', revenue: 4000, orders: 24 },
-  { name: 'Feb', revenue: 3000, orders: 13 },
-  { name: 'Mar', revenue: 2000, orders: 18 },
-  { name: 'Apr', revenue: 2780, orders: 39 },
-  { name: 'May', revenue: 1890, orders: 48 },
-  { name: 'Jun', revenue: 2390, orders: 38 },
-  { name: 'Jul', revenue: 3490, orders: 43 },
-  { name: 'Aug', revenue: 4000, orders: 52 },
-  { name: 'Sep', revenue: 4500, orders: 61 },
-  { name: 'Oct', revenue: 5200, orders: 72 },
-  { name: 'Nov', revenue: 6100, orders: 85 },
-  { name: 'Dec', revenue: 7200, orders: 98 },
-];
+export type SalesChartPoint = {
+  name: string;
+  revenue: number;
+  orders: number;
+};
 
-export function SalesChart() {
+export function SalesChart({ data }: { data: SalesChartPoint[] }) {
+  if (data.length === 0) {
+    return (
+      <div className="h-[300px] flex items-center justify-center text-sm text-muted-foreground">
+        No order data yet.
+      </div>
+    );
+  }
+
   return (
     <ResponsiveContainer width="100%" height={300}>
       <AreaChart data={data}>

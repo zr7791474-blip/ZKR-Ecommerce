@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
 
   return {
-    name: "ZKR Ecommerce",
+    name: "ZKR E-Commerce",
     short_name: "ZKR",
     description:
       "Modern ecommerce shopping platform",

@@ -1,33 +1,49 @@
-import Link from "next/link";
-import { Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { redirect } from 'next/navigation';
+import { getCurrentUserProfile } from '@/services/user.service';
+import { ProfileForm } from '@/components/account/profile-form';
+import { PasswordForm } from '@/components/account/password-form';
+import { PreferencesForm } from '@/components/account/preferences-form';
 
 export const metadata = {
-  title: "Account Settings | ZKR Store",
+  title: 'Account Settings | ZKR E-Commerce',
 };
 
-export default function AccountSettingsPage() {
+export default async function AccountSettingsPage() {
+  const profile = await getCurrentUserProfile();
+
+  if (!profile) redirect('/login?redirect=/account/settings');
+
   return (
-    <main className="min-h-screen container mx-auto px-4 py-16">
-      <div className="max-w-xl mx-auto text-center space-y-6">
-        <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-          <Settings className="w-8 h-8 text-primary" />
-        </div>
+    <div className="relative max-w-2xl mx-auto py-10 md:py-14 px-4">
+      <div className="absolute -top-20 left-1/4 h-[300px] w-[300px] rounded-full bg-primary/[0.06] blur-[110px] pointer-events-none" />
 
-        <h1 className="text-3xl font-bold">
-          Account Settings
-        </h1>
-
-        <p className="text-muted-foreground">
-          Manage your account preferences and settings.
+      <div className="relative mb-8">
+        <h1 className="text-3xl font-bold text-foreground">Account Settings</h1>
+        <p className="text-muted-foreground text-sm mt-1">
+          Manage your profile, password, and preferences.
         </p>
-
-        <Button asChild>
-          <Link href="/account">
-            Back to Account
-          </Link>
-        </Button>
       </div>
-    </main>
+
+      <div className="relative space-y-6">
+        <ProfileForm
+          email={profile.email}
+          defaultValues={{
+            firstName: profile.firstName || '',
+            lastName: profile.lastName || '',
+            phone: profile.phone || '',
+          }}
+        />
+
+        {profile.password ? (
+          <PasswordForm />
+        ) : (
+          <div className="rounded-2xl border border-border/60 bg-card p-5 text-sm text-muted-foreground">
+            You signed in with a social account, so there's no password to change here.
+          </div>
+        )}
+
+        <PreferencesForm />
+      </div>
+    </div>
   );
 }

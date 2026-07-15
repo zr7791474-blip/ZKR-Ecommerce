@@ -10,10 +10,60 @@ export const passwordSchema = z
   .regex(/[0-9]/, 'Password must contain at least one number')
   .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character');
 
+export const productAdminSchema = z.object({
+  name: z.string().min(2, 'Name is required'),
+  sku: z.string().min(2, 'SKU is required'),
+  description: z.string().optional(),
+  shortDescription: z.string().optional(),
+  price: z.coerce.number().positive('Price must be greater than 0'),
+  compareAtPrice: z.coerce.number().positive().optional().or(z.literal('')),
+  stock: z.coerce.number().int().min(0, 'Stock cannot be negative'),
+  categoryId: z.string().min(1, 'Category is required'),
+  brandId: z.string().optional(),
+  imageUrl: z.string().min(1, 'At least one image URL is required'),
+  isActive: z.boolean().default(true),
+  isFeatured: z.boolean().default(false),
+  isNew: z.boolean().default(false),
+  isBestSeller: z.boolean().default(false),
+});
+
+export type ProductAdminInput = z.infer<typeof productAdminSchema>;
+
+export const updateProfileSchema = z.object({
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  phone: z.string().optional().or(z.literal('')),
+});
+
+export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
+
+export const changePasswordFormSchema = z.object({
+  currentPassword: z.string().min(1, 'Current password is required'),
+  newPassword: passwordSchema,
+  confirmNewPassword: z.string(),
+}).refine((data) => data.newPassword === data.confirmNewPassword, {
+  message: 'Passwords do not match',
+  path: ['confirmNewPassword'],
+});
+
+export type ChangePasswordFormInput = z.infer<typeof changePasswordFormSchema>;
+
 export const registerSchema = z.object({
   firstName: z.string().min(2, 'First name must be at least 2 characters'),
   lastName: z.string().min(2, 'Last name must be at least 2 characters'),
   email: emailSchema,
+  password: passwordSchema,
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: 'Passwords do not match',
+  path: ['confirmPassword'],
+});
+
+export const forgotPasswordSchema = z.object({
+  email: emailSchema,
+});
+
+export const resetPasswordSchema = z.object({
   password: passwordSchema,
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
@@ -83,6 +133,8 @@ export const contactSchema = z.object({
 
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
+export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type ProductInput = z.infer<typeof productSchema>;
 export type AddressInput = z.infer<typeof addressSchema>;
 export type ReviewInput = z.infer<typeof reviewSchema>;

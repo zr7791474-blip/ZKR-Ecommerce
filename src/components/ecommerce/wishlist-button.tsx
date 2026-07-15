@@ -3,6 +3,7 @@
 import { Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useWishlistStore } from '@/stores/wishlist.store';
+import { useRequireAuth } from '@/hooks/use-require-auth';
 import { toast } from 'sonner';
 
 type Props = {
@@ -21,15 +22,19 @@ export function WishlistButton({
   productPrice,
 }: Props) {
   const { addItem, removeItem, isInWishlist } = useWishlistStore();
+  const requireAuth = useRequireAuth();
   const inWishlist = isInWishlist(productId);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
+
+    if (!requireAuth('save items to your wishlist')) return;
+
     if (inWishlist) {
-      removeItem(productId);
+      void removeItem(productId);
       toast.success('Removed from wishlist');
     } else {
-      addItem({
+      void addItem({
         productId,
         name: productName,
         slug: productSlug,
@@ -41,8 +46,8 @@ export function WishlistButton({
   };
 
   return (
-    <Button size="lg" variant="outline" onClick={handleClick}>
-      <Heart className={`w-4 h-4 ${inWishlist ? 'fill-red-500 text-red-500' : ''}`} />
+    <Button size="lg" variant="outline" onClick={handleClick} aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}>
+      <Heart className={`w-4 h-4 ${inWishlist ? 'fill-accent text-accent' : ''}`} />
     </Button>
   );
 }

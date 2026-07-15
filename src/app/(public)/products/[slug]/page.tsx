@@ -10,10 +10,13 @@ import {
 } from 'lucide-react';
 
 import { getProductBySlug } from '@/services/product.service';
-import { ProductCard } from '@/components/ecommerce/product-card';
 import { AddToCartButton } from '@/components/ecommerce/add-to-cart-button';
+import { BuyNowButton } from '@/components/ecommerce/buy-now-button';
 import { WishlistButton } from '@/components/ecommerce/wishlist-button';
 import { ReviewsSection } from '@/components/ecommerce/reviews-section';
+import { ProductRecommendations } from '@/components/ecommerce/product-recommendations';
+import { RecentlyViewed, RecentlyViewedTracker } from '@/components/ecommerce/recently-viewed';
+import { pickDemoProducts } from '@/lib/demo-products';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatPrice, calculateDiscount } from '@/lib/utils';
@@ -73,7 +76,7 @@ export async function generateMetadata({ params }: Props) {
   if (!product) return {};
 
   return {
-    title: `${product.name} — ZKR Store`,
+    title: `${product.name} — ZKR E-Commerce`,
     description: product.shortDescription || product.description,
   };
 }
@@ -129,7 +132,7 @@ export default async function ProductPage({ params }: Props) {
 
             {discount > 0 && (
               <Badge
-                variant="destructive"
+                variant="accent"
                 className="absolute top-4 left-4 text-base px-3 py-1"
               >
                 -{discount}%
@@ -182,8 +185,8 @@ export default async function ProductPage({ params }: Props) {
                   key={i}
                   className={`w-5 h-5 ${
                     i < Math.round(product.avgRating)
-                      ? 'fill-yellow-400 text-yellow-400'
-                      : 'text-muted'
+                      ? 'fill-warm text-warm'
+                      : 'text-muted-foreground'
                   }`}
                 />
               ))}
@@ -206,7 +209,7 @@ export default async function ProductPage({ params }: Props) {
                   {formatPrice(Number(product.compareAtPrice))}
                 </span>
 
-                <Badge variant="destructive">
+                <Badge variant="accent">
                   Save{' '}
                   {formatPrice(
                     Number(product.compareAtPrice) - Number(product.price)
@@ -224,8 +227,8 @@ export default async function ProductPage({ params }: Props) {
           <div className="flex items-center gap-2">
             {product.stock > 0 ? (
               <>
-                <Check className="w-5 h-5 text-green-500" />
-                <span className="text-green-600 font-medium">
+                <Check className="w-5 h-5 text-success" />
+                <span className="text-success font-medium">
                   In Stock ({product.stock} available)
                 </span>
               </>
@@ -253,6 +256,15 @@ export default async function ProductPage({ params }: Props) {
           {/* Actions */}
           <div className="flex gap-3">
             <AddToCartButton
+              productId={product.id}
+              productName={product.name}
+              productSlug={product.slug}
+              productImage={mainImage}
+              productPrice={Number(product.price)}
+              disabled={product.stock === 0}
+            />
+
+            <BuyNowButton
               productId={product.id}
               productName={product.name}
               productSlug={product.slug}
@@ -319,20 +331,38 @@ export default async function ProductPage({ params }: Props) {
         totalRatings={product.ratings.length}
       />
 
-      {/* Related Products */}
-      {product.related.length > 0 && (
-        <section className="mt-16">
-          <h2 className="text-2xl font-bold mb-6">
-            Related Products
-          </h2>
+      {/* Related Products — real related items first, padded with the
+          shared demo catalog (same category where possible) so this
+          section never sits empty for newer/less-connected products. */}
+      <div className="mt-16">
+        <ProductRecommendations
+          title="Related Products"
+          products={[
+            ...product.related,
+            ...pickDemoProducts(Math.max(0, 4 - product.related.length), {
+              categorySlug: product.category.slug,
+              excludeIds: [product.id],
+            }),
+          ]}
+        />
+      </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {product.related.map((p: RelatedProduct) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Recently Viewed — client-only, from this visitor's browsing history */}
+      <div className="mt-16">
+        <RecentlyViewed excludeId={product.id} />
+      </div>
+
+      <RecentlyViewedTracker
+        item={{
+          id: product.id,
+          name: product.name,
+          slug: product.slug,
+          image: mainImage,
+          price: Number(product.price),
+          compareAtPrice: product.compareAtPrice ? Number(product.compareAtPrice) : null,
+          category: product.category,
+        }}
+      />
     </div>
   );
 }

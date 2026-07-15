@@ -17,104 +17,119 @@ body {
   @apply bg-background text-foreground antialiased;
   font-family: var(--font-inter), system-ui, sans-serif;
   font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-muted;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/30 rounded-full transition-colors;
+  @apply bg-foreground/10 rounded-full transition-colors;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-muted-foreground/50;
+  @apply bg-foreground/20;
 }
 
 /* Selection */
 ::selection {
-  @apply bg-primary/20 text-foreground;
+  @apply bg-primary/30 text-foreground;
 }
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71% 4%;
-    
+    /* ZKR light system (default) — navy / butterscotch / rose madder */
+    --background: 0 0% 100%;         /* #FFFFFF */
+    --foreground: 221 39% 11%;       /* #111827 */
+
     --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
-    
+    --card-foreground: 221 39% 11%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71% 4%;
-    
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-    
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 224 71% 4%;
-    
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
-    
-    --accent: 220 14% 96%;
-    --accent-foreground: 224 71% 4%;
-    
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    
-    --success: 142 76% 36%;
-    --success-foreground: 210 40% 98%;
-    
-    --warning: 38 92% 50%;
-    --warning-foreground: 210 40% 98%;
-    
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 221 83% 53%;
-    
-    --radius: 0.625rem;
+    --popover-foreground: 221 39% 11%;
+
+    --primary: 203 65% 34%;          /* #1F6590 Light Navy Blue */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 98%;        /* #F8FAFC */
+    --secondary-foreground: 221 39% 11%;
+
+    --muted: 210 40% 98%;            /* #F8FAFC */
+    --muted-foreground: 215 16% 47%; /* #64748B */
+
+    --accent: 357 79% 53%;           /* #E62A34 Rose Madder — brand accent, use sparingly */
+    --accent-foreground: 0 0% 100%;
+
+    --warm: 35 97% 65%;              /* #FCB34F Butterscotch — warmth accent */
+    --warm-foreground: 221 39% 11%;
+
+    --destructive: 0 84% 60%;        /* #EF4444 */
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;          /* #22C55E */
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;           /* #F59E0B */
+    --warning-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 203 65% 34%;
+
+    --radius: 1.25rem;
+    --glow: 203 65% 34%;
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
-    
-    --card: 224 71% 4%;
-    --card-foreground: 213 31% 91%;
-    
-    --popover: 224 71% 4%;
-    --popover-foreground: 213 31% 91%;
-    
-    --primary: 217 91% 60%;
-    --primary-foreground: 222 47% 11%;
-    
-    --secondary: 215 28% 17%;
-    --secondary-foreground: 213 31% 91%;
-    
-    --muted: 215 28% 17%;
-    --muted-foreground: 217 9% 65%;
-    
-    --accent: 215 28% 17%;
-    --accent-foreground: 213 31% 91%;
-    
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 210 40% 98%;
-    
-    --success: 142 76% 36%;
-    --success-foreground: 210 40% 98%;
-    
+    /* Premium dark glass system — optional toggle theme */
+    --background: 209 57% 7%;        /* #08131D */
+    --foreground: 0 0% 100%;         /* #FFFFFF */
+
+    --card: 209 48% 14%;             /* #132536 */
+    --card-foreground: 0 0% 100%;
+
+    --popover: 209 48% 14%;          /* #132536 */
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 203 65% 34%;          /* #1F6590 Light Navy Blue — kept consistent across themes */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 211 45% 11%;        /* #0F1B28 */
+    --secondary-foreground: 206 17% 82%;
+
+    --muted: 211 45% 11%;            /* #0F1B28 */
+    --muted-foreground: 206 17% 82%; /* #C8D1D8 */
+
+    --accent: 357 79% 53%;           /* #E62A34 Rose Madder — discounts, wishlist-active, delete, alerts only */
+    --accent-foreground: 0 0% 100%;
+
+    --warm: 35 97% 65%;              /* #FCB34F Butterscotch — CTAs, ratings, prices, premium badges */
+    --warm-foreground: 221 39% 11%;
+
+    --destructive: 0 74% 56%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 152 60% 42%;
+    --success-foreground: 0 0% 100%;
+
     --warning: 38 92% 50%;
-    --warning-foreground: 210 40% 98%;
-    
-    --border: 215 28% 17%;
-    --input: 215 28% 17%;
-    --ring: 217 91% 60%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 208 25% 15%;           /* rgba(255,255,255,0.08) blended on #08131D */
+    --border-rgb: 255 255 255;       /* use with bg-white/[.08] or border-white/[.08] for true translucent edges */
+    --input: 210 45% 16%;
+    --ring: 203 80% 55%;             /* brighter navy tint for visible focus rings on dark */
+
+    --radius: 1.25rem;
+
+    --glow: 203 80% 55%;
   }
 }
 
@@ -124,23 +139,24 @@ body {
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
+    @apply font-bold tracking-tight text-balance;
+    letter-spacing: -0.02em;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl;
+    @apply text-4xl md:text-5xl lg:text-6xl leading-[1.05];
   }
 
   h2 {
-    @apply text-3xl md:text-4xl;
+    @apply text-3xl md:text-4xl leading-[1.1];
   }
 
   h3 {
-    @apply text-2xl md:text-3xl;
+    @apply text-2xl md:text-3xl leading-tight;
   }
 
   h4 {
-    @apply text-xl md:text-2xl;
+    @apply text-xl md:text-2xl leading-tight;
   }
 
   h5 {
@@ -149,6 +165,10 @@ body {
 
   h6 {
     @apply text-base md:text-lg;
+  }
+
+  p {
+    @apply leading-relaxed;
   }
 
   a {
@@ -170,26 +190,71 @@ body {
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, hsl(var(--primary)), #a855f7);
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
+  /* Core glassmorphism surface used by navbar, sidebar, cards, modals */
   .glass {
-    @apply bg-background/80 backdrop-blur-xl border border-border/50;
+    background: hsl(var(--background) / 0.72);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid hsl(var(--foreground) / 0.08);
+  }
+
+  .glass-subtle {
+    background: hsl(var(--foreground) / 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--foreground) / 0.06);
   }
 
   .glass-dark {
-    @apply bg-background/40 backdrop-blur-xl border border-border/30;
+    background: hsl(var(--background) / 0.6);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid hsl(var(--foreground) / 0.06);
+  }
+
+  .surface-2 {
+    @apply bg-secondary;
+  }
+
+  .border-hairline {
+    border: 1px solid hsl(var(--foreground) / 0.08);
+  }
+
+  .shadow-premium {
+    box-shadow: 0 1px 2px hsl(var(--foreground) / 0.08), 0 12px 32px -8px hsl(var(--foreground) / 0.12);
+  }
+
+  .dark .shadow-premium {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24), 0 12px 32px -8px rgba(0, 0, 0, 0.45);
   }
 
   .shadow-glow {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+    box-shadow: 0 0 24px hsl(var(--glow) / 0.35);
   }
 
   .shadow-glow-lg {
-    box-shadow: 0 0 40px hsl(var(--primary) / 0.4);
+    box-shadow: 0 0 48px hsl(var(--glow) / 0.4), 0 0 96px hsl(var(--primary) / 0.15);
+  }
+
+  .glow-ring {
+    box-shadow: 0 0 0 1px hsl(var(--foreground) / 0.08), 0 0 24px hsl(var(--glow) / 0.25);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(hsl(var(--foreground) / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .noise-overlay {
+    position: relative;
   }
 
   .animate-in {

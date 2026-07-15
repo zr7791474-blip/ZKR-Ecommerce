@@ -166,6 +166,31 @@ export async function getOrders(page = 1, limit = 10) {
   };
 }
 
+/**
+ * Public order lookup for the /track-order page — no login required.
+ * Authorization is done by matching the provided email against the order's
+ * own account email instead of a session, so a guest can check status
+ * without signing in, but can't look up someone else's order by guessing
+ * an order number alone.
+ */
+export async function trackOrderPublic(orderNumber: string, email: string) {
+  const order = await prisma.order.findUnique({
+    where: { orderNumber },
+    include: {
+      user: { select: { email: true } },
+      items: {
+        include: { product: { include: { images: { take: 1 } } } },
+      },
+    },
+  });
+
+  if (!order || order.user.email.toLowerCase() !== email.trim().toLowerCase()) {
+    throw new AppError('No matching order found for that order number and email.', 404);
+  }
+
+  return order;
+}
+
 export async function getOrder(orderNumber: string) {
   const session = await auth();
   if (!session?.user?.id) throw new UnauthorizedError();

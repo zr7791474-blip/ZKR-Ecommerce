@@ -81,32 +81,37 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30 p-4">
+    <div className="relative min-h-screen flex items-center justify-center bg-secondary/40 p-4 overflow-hidden">
+      <div className="absolute -top-40 left-1/3 h-[400px] w-[400px] rounded-full bg-primary/[0.08] blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 h-[300px] w-[300px] rounded-full bg-accent/[0.06] blur-[100px] pointer-events-none" />
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
+        className="relative w-full max-w-md"
       >
-        <Card className="backdrop-blur-xl bg-background/80 border-border/50 shadow-2xl">
+        <Card className="border-border/60 shadow-premium">
 
-          <CardHeader className="text-center space-y-2">
-            <div className="mx-auto w-14 h-14 relative">
+          <CardHeader className="text-center space-y-3">
+            <div className="mx-auto w-14 h-14 relative rounded-2xl bg-foreground/[0.03] border border-border p-2">
               <Image
                 src="/logo.png"
-                alt="ZKR Store"
+                alt="ZKR E-Commerce"
                 fill
                 priority
-                className="object-contain"
+                className="object-contain p-1"
               />
             </div>
+
+            <p className="text-[11px] font-semibold tracking-widest uppercase text-warm">Premium Shopping Experience</p>
 
             <CardTitle className="text-2xl font-bold">
               Welcome back
             </CardTitle>
 
             <CardDescription>
-              Sign in to your ZKR Store account
+              Sign in to your ZKR E-Commerce account
             </CardDescription>
           </CardHeader>
 
@@ -151,7 +156,7 @@ export default function LoginPage() {
               <div className="space-y-2">
                 <Label>Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     className="pl-10"
                     type="email"
@@ -167,9 +172,17 @@ export default function LoginPage() {
 
               {/* Password */}
               <div className="space-y-2">
-                <Label>Password</Label>
+                <div className="flex items-center justify-between">
+                  <Label>Password</Label>
+                  <Link
+                    href="/forgot-password"
+                    className="text-xs font-medium text-primary hover:underline"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     className="pl-10 pr-10"
                     type={showPassword ? 'text' : 'password'}
@@ -178,9 +191,10 @@ export default function LoginPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    aria-label="Toggle password visibility"
                   >
-                    {showPassword ? <EyeOff /> : <Eye />}
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
 
