@@ -199,9 +199,14 @@ export function Navbar() {
               <div className="w-px h-6 bg-foreground/[0.08] mx-0.5 hidden sm:block" />
 
               {status !== 'authenticated' && (
-                <Button size="sm" className="hidden sm:inline-flex" asChild>
-                  <Link href="/register">Sign Up</Link>
-                </Button>
+                <div className="hidden sm:flex items-center gap-2">
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href="/login">Sign In</Link>
+                  </Button>
+                  <Button size="sm" asChild>
+                    <Link href="/register">Sign Up</Link>
+                  </Button>
+                </div>
               )}
 
               <div className="hidden sm:block">

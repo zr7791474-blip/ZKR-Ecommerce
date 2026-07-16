@@ -20,6 +20,7 @@ const publicPaths = [
   '/cookies',
   '/shipping',
   '/returns',
+  '/refund',
   '/track-order',
   '/help',
   '/careers',

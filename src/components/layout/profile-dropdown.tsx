@@ -32,16 +32,7 @@ export function ProfileDropdown() {
 
 
   if (!session?.user) {
-    return (
-      <Link href="/login">
-        <Button
-          variant="default"
-          size="sm"
-        >
-          Sign in
-        </Button>
-      </Link>
-    );
+    return null;
   }
 
 

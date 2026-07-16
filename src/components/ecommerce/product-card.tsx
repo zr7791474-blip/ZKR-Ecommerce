@@ -137,8 +137,10 @@ function ProductCardInner({ product }: ProductCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -4, rotateX: 2, rotateY: -2 }}
       transition={{ duration: 0.3 }}
-      className="group relative rounded-3xl border border-foreground/[0.08] bg-foreground/[0.02] p-3 shadow-premium transition-all duration-300 hover:-translate-y-1 hover:border-foreground/[0.14] hover:shadow-glow"
+      style={{ perspective: 1000 }}
+      className="group relative rounded-3xl border border-foreground/[0.08] bg-foreground/[0.02] p-3 shadow-premium transition-colors duration-300 [transform-style:preserve-3d] hover:border-foreground/[0.14] hover:shadow-glow"
     >
       <div className="relative aspect-square rounded-2xl overflow-hidden bg-muted mb-3">
         <Link href={`/products/${product.slug}`}>

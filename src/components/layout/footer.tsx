@@ -9,6 +9,7 @@ import {
   Truck,
   RotateCcw,
   ArrowRight,
+  ArrowUp,
   CreditCard,
 } from 'lucide-react';
 
@@ -45,6 +46,7 @@ const footerLinks = {
     { href: '/faq', label: 'FAQ' },
     { href: '/shipping', label: 'Shipping Info' },
     { href: '/returns', label: 'Returns' },
+    { href: '/refund', label: 'Refund Policy' },
     { href: '/track-order', label: 'Track Order' },
   ],
 
@@ -162,15 +164,15 @@ export function Footer() {
             </div>
 
             <form
-              className="flex w-full md:w-auto gap-2"
+              className="flex flex-col sm:flex-row w-full md:w-auto gap-3 sm:gap-2"
               onSubmit={(e) => e.preventDefault()}
             >
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 md:w-72 px-5 h-11 rounded-full bg-foreground/[0.05] border border-foreground/[0.1] text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/40 transition-all"
+                className="w-full sm:flex-1 sm:w-72 min-w-0 px-5 h-11 rounded-full bg-foreground/[0.05] border border-foreground/[0.1] text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/40 transition-all"
               />
-              <Button type="submit" size="lg" className="shrink-0 px-6">
+              <Button type="submit" size="lg" className="w-full sm:w-auto sm:shrink-0 px-6">
                 Subscribe
                 <ArrowRight className="w-4 h-4" />
               </Button>
@@ -201,6 +203,21 @@ export function Footer() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+          <span>
+            Mobile app — <span className="text-foreground/70">coming soon</span>
+          </span>
+
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Back to top"
+            className="flex items-center gap-1.5 rounded-full border border-foreground/[0.08] bg-foreground/[0.03] px-3.5 py-2 hover:bg-foreground/[0.08] hover:text-foreground transition-colors"
+          >
+            <ArrowUp className="w-3.5 h-3.5" />
+            Back to top
+          </button>
         </div>
       </div>
     </footer>
