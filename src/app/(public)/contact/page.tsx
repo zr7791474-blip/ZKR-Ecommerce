@@ -1,23 +1,70 @@
 'use client';
 
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Send, Loader2 } from 'lucide-react';
+import { SiX, SiWhatsapp, SiGithub } from 'react-icons/si';
 import { Button } from '@/components/ui/button';
+
+const socialContacts = [
+  {
+    label: 'X (Twitter)',
+    href: 'https://x.com/zkr_ad',
+    icon: SiX,
+    value: '@zkr_ad',
+  },
+  {
+    label: 'WhatsApp',
+    href: 'https://wa.me/212657516301',
+    icon: SiWhatsapp,
+    value: '+212 657 516 301',
+  },
+  {
+    label: 'GitHub',
+    href: 'https://github.com/zr7791474-blip',
+    icon: SiGithub,
+    value: 'zr7791474-blip',
+  },
+  {
+    label: 'Email',
+    href: 'mailto:zr7791474@gmail.com?subject=Project%20Inquiry&body=Hello%20Zakaria,%0A%0AI%20would%20like%20to%20contact%20you%20regarding...',
+    icon: Mail,
+    value: 'zr7791474@gmail.com',
+  },
+];
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsSuccess(true);
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    setIsSubmitting(false);
-    setTimeout(() => setIsSuccess(false), 5000);
+    setError(null);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        setError(json.error || 'Could not send your message. Please try again.');
+        return;
+      }
+
+      setIsSuccess(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setIsSuccess(false), 5000);
+    } catch {
+      setError('Could not send your message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -33,29 +80,25 @@ export default function ContactPage() {
         {/* Contact Info */}
         <div className="lg:col-span-1 space-y-6">
           <div className="p-6 rounded-xl border border-border bg-card">
-            <h3 className="font-semibold mb-4">Contact Information</h3>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-primary mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium">Email</p>
-                  <p className="text-sm text-muted-foreground">support@zkr.com</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-primary mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium">Phone</p>
-                  <p className="text-sm text-muted-foreground">+1 (555) 123-4567</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-primary mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium">Office</p>
-                  <p className="text-sm text-muted-foreground">123 Commerce St, Suite 100<br />San Francisco, CA 94103</p>
-                </div>
-              </div>
+            <h3 className="font-semibold mb-4">Contact Us Directly</h3>
+            <div className="space-y-2">
+              {socialContacts.map((contact) => (
+                <a
+                  key={contact.label}
+                  href={contact.href}
+                  target={contact.label !== 'Email' ? '_blank' : undefined}
+                  rel={contact.label !== 'Email' ? 'noopener noreferrer' : undefined}
+                  className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-secondary/50 transition-colors group"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:border-primary/40 transition-colors">
+                    <contact.icon className="w-4 h-4 text-primary" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium">{contact.label}</p>
+                    <p className="text-sm text-muted-foreground truncate">{contact.value}</p>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -64,8 +107,13 @@ export default function ContactPage() {
         <div className="lg:col-span-2">
           <form onSubmit={handleSubmit} className="p-6 rounded-xl border border-border bg-card space-y-6">
             {isSuccess && (
-              <div className="p-4 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              <div className="p-4 rounded-lg bg-success/10 text-success border border-success/20">
                 Message sent successfully! We will get back to you soon.
+              </div>
+            )}
+            {error && (
+              <div className="p-4 rounded-lg bg-accent/10 text-accent border border-accent/20">
+                {error}
               </div>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -120,10 +168,12 @@ export default function ContactPage() {
             </div>
             <Button type="submit" className="w-full md:w-auto" disabled={isSubmitting}>
               {isSubmitting ? (
-                'Sending...'
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" /> Sending...
+                </>
               ) : (
                 <>
-                  <Send className="w-4 h-4 mr-2" /> Send Message
+                  <Send className="w-4 h-4" /> Send Message
                 </>
               )}
             </Button>

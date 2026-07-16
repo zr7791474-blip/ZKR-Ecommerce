@@ -9,9 +9,10 @@ type EmailOptions = {
   subject: string;
   html: string;
   text?: string;
+  replyTo?: string;
 };
 
-export async function sendEmail({ to, subject, html, text }: EmailOptions) {
+export async function sendEmail({ to, subject, html, text, replyTo }: EmailOptions) {
   if (!resend) {
     console.warn('RESEND_API_KEY is missing. Email skipped.');
     return { success: false, error: 'Email service not configured' };
@@ -24,6 +25,7 @@ export async function sendEmail({ to, subject, html, text }: EmailOptions) {
       subject,
       html,
       text,
+      ...(replyTo ? { replyTo } : {}),
     });
 
     if (error) {
@@ -89,5 +91,29 @@ export async function sendOrderConfirmationEmail(email: string, orderNumber: str
         <p>We'll send you tracking information once your order ships.</p>
       </div>
     `,
+  });
+}
+
+const CONTACT_INBOX = process.env.CONTACT_EMAIL_TO || 'zr7791474@gmail.com';
+
+export async function sendContactFormEmail(data: {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}) {
+  return sendEmail({
+    to: CONTACT_INBOX,
+    subject: `[Contact Form] ${data.subject}`,
+    html: `
+      <div style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h1 style="color: #0f172a; font-size: 20px;">New contact form submission</h1>
+        <p><strong>From:</strong> ${data.name} (${data.email})</p>
+        <p><strong>Subject:</strong> ${data.subject}</p>
+        <p style="white-space: pre-wrap; border-left: 3px solid #1F6590; padding-left: 12px; margin-top: 16px;">${data.message}</p>
+      </div>
+    `,
+    text: `New contact form submission\n\nFrom: ${data.name} (${data.email})\nSubject: ${data.subject}\n\n${data.message}`,
+    replyTo: data.email,
   });
 }
