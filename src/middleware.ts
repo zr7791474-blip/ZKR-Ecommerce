@@ -11,6 +11,7 @@ const publicPaths = [
   '/verify-email',
   '/products',
   '/categories',
+  '/compare',
   '/about',
   '/contact',
   '/blog',

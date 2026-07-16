@@ -13,6 +13,7 @@ import { getProductBySlug } from '@/services/product.service';
 import { AddToCartButton } from '@/components/ecommerce/add-to-cart-button';
 import { BuyNowButton } from '@/components/ecommerce/buy-now-button';
 import { WishlistButton } from '@/components/ecommerce/wishlist-button';
+import { ShareButton } from '@/components/ecommerce/share-button';
 import { ReviewsSection } from '@/components/ecommerce/reviews-section';
 import { ProductRecommendations } from '@/components/ecommerce/product-recommendations';
 import { RecentlyViewed, RecentlyViewedTracker } from '@/components/ecommerce/recently-viewed';
@@ -279,6 +280,11 @@ export default async function ProductPage({ params }: Props) {
               productSlug={product.slug}
               productImage={mainImage}
               productPrice={Number(product.price)}
+            />
+
+            <ShareButton
+              title={product.name}
+              url={`${process.env.NEXT_PUBLIC_APP_URL || ''}/products/${product.slug}`}
             />
           </div>
 

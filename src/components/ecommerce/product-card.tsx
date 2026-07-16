@@ -3,13 +3,14 @@
 import { memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Heart, ShoppingCart, Star, Eye } from 'lucide-react';
+import { Heart, ShoppingCart, Star, Eye, Scale } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useCartStore } from '@/stores/cart.store';
 import { useWishlistStore } from '@/stores/wishlist.store';
+import { useCompareStore } from '@/stores/compare.store';
 import { useRequireAuth } from '@/hooks/use-require-auth';
 import { formatPrice, calculateDiscount } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -52,7 +53,11 @@ function ProductCardInner({ product }: ProductCardProps) {
   const { addItem: addWishlist, removeItem: removeWishlist, isInWishlist } =
     useWishlistStore();
 
+  const { addItem: addCompare, removeItem: removeCompare, isComparing } =
+    useCompareStore();
+
   const inWishlist = isInWishlist(product.id);
+  const inCompare = isComparing(product.id);
 
   const priceNum =
     typeof product.price === 'number'
@@ -124,6 +129,30 @@ function ProductCardInner({ product }: ProductCardProps) {
       });
 
       toast.success('Added to wishlist');
+    }
+  };
+
+  const handleToggleCompare = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (inCompare) {
+      removeCompare(product.id);
+      toast.success('Removed from compare');
+    } else {
+      addCompare({
+        productId: product.id,
+        name: product.name,
+        slug: product.slug,
+        image,
+        price: priceNum,
+        category: product.category?.name,
+        averageRating: rating,
+        stock: product.stock,
+      });
+      toast.success('Added to compare', {
+        action: { label: 'View', onClick: () => (window.location.href = '/compare') },
+      });
     }
   };
 
@@ -208,6 +237,16 @@ function ProductCardInner({ product }: ProductCardProps) {
               <Eye className="w-4 h-4" />
             </Button>
           </Link>
+
+          <Button
+            size="icon"
+            variant="glass"
+            className="h-9 w-9 rounded-full"
+            onClick={handleToggleCompare}
+            aria-label={inCompare ? 'Remove from compare' : 'Add to compare'}
+          >
+            <Scale className={`w-4 h-4 ${inCompare ? 'text-primary' : ''}`} />
+          </Button>
         </div>
 
         <div className="absolute bottom-3 left-3 right-3 translate-y-2 opacity-100 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300">

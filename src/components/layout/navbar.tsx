@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ShoppingCart, Menu, Heart, Sun, Moon } from 'lucide-react';
+import { Search, ShoppingCart, Menu, Heart, Sun, Moon, Scale } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useSession } from 'next-auth/react';
 
@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 
 import { useCartItemsCount } from '@/stores/cart.store';
 import { useWishlistCount } from '@/stores/wishlist.store';
+import { useCompareCount } from '@/stores/compare.store';
 
 import { ProfileDropdown } from './profile-dropdown';
 import { CommandPalette } from './command-palette';
@@ -40,6 +41,7 @@ export function Navbar() {
 
   const cartItemsCount = useCartItemsCount();
   const wishlistCount = useWishlistCount();
+  const compareCount = useCompareCount();
 
   useEffect(() => {
     setMounted(true);
@@ -167,6 +169,29 @@ export function Navbar() {
                         className="absolute -top-1 -right-1 flex items-center justify-center h-4 min-w-[16px] px-1 rounded-full bg-primary text-[9px] font-bold text-primary-foreground shadow-glow"
                       >
                         {wishlistCount}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </Button>
+              </Link>
+
+              <Link href="/compare" className="hidden sm:block">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative rounded-full bg-foreground/[0.03] border border-foreground/[0.08] hover:bg-foreground/[0.08]"
+                >
+                  <Scale className="w-[18px] h-[18px]" />
+                  <AnimatePresence>
+                    {compareCount > 0 && (
+                      <motion.span
+                        key={compareCount}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        className="absolute -top-1 -right-1 flex items-center justify-center h-4 min-w-[16px] px-1 rounded-full bg-primary text-[9px] font-bold text-primary-foreground shadow-glow"
+                      >
+                        {compareCount}
                       </motion.span>
                     )}
                   </AnimatePresence>

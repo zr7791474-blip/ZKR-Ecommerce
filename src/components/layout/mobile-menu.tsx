@@ -14,6 +14,7 @@ import {
   User,
   LogOut,
   Heart,
+  Scale,
   Sun,
   Moon,
 } from 'lucide-react';
@@ -28,6 +29,7 @@ const navLinks = [
   { href: '/products', label: 'Products', icon: ShoppingBag },
   { href: '/categories', label: 'Categories', icon: Tag },
   { href: '/account/wishlist', label: 'Wishlist', icon: Heart },
+  { href: '/compare', label: 'Compare', icon: Scale },
   { href: '/blog', label: 'Blog', icon: BookOpen },
   { href: '/about', label: 'About', icon: Info },
   { href: '/contact', label: 'Contact', icon: Mail },
