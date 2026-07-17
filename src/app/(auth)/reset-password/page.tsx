@@ -97,7 +97,7 @@ function ResetPasswordForm() {
             </CardTitle>
 
             <CardDescription>
-              Choose a strong password you haven't used before.
+              Choose a strong password you haven&apos;t used before.
             </CardDescription>
           </CardHeader>
 

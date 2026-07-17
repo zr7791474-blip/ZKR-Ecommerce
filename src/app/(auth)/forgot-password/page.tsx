@@ -86,7 +86,7 @@ export default function ForgotPasswordPage() {
             </CardTitle>
 
             <CardDescription>
-              No worries — enter your email and we'll send you a reset link.
+              No worries — enter your email and we&apos;ll send you a reset link.
             </CardDescription>
           </CardHeader>
 

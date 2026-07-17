@@ -19,7 +19,7 @@ export default function CareersPage() {
           Help Us Build the Future of Shopping
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
-          We're a small team obsessed with making online shopping feel premium, fast, and effortless.
+          We&apos;re a small team obsessed with making online shopping feel premium, fast, and effortless.
         </p>
       </div>
 
@@ -38,7 +38,7 @@ export default function CareersPage() {
       <div className="rounded-3xl border border-border/60 bg-secondary/40 p-8 md:p-10 text-center">
         <h2 className="text-2xl font-bold text-foreground mb-2">No open roles right now</h2>
         <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-          We're not actively hiring at the moment, but we're always happy to hear from people who love what we're building. Send us your resume and what you're interested in.
+          We&apos;re not actively hiring at the moment, but we&apos;re always happy to hear from people who love what we&apos;re building. Send us your resume and what you&apos;re interested in.
         </p>
         <a
           href="mailto:careers@zkrstore.com?subject=General%20Application"

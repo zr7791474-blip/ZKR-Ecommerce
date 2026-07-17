@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
@@ -58,8 +59,14 @@ export default function RegisterPage() {
       >
         <Card className="border-border/60 shadow-premium">
           <CardHeader className="text-center space-y-3">
-            <div className="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white font-bold text-2xl shadow-premium">
-              Z
+            <div className="mx-auto w-14 h-14 relative rounded-2xl bg-foreground/[0.03] border border-border p-2 shadow-premium">
+              <Image
+                src="/logo.png"
+                alt="ZKR E-Commerce"
+                fill
+                priority
+                className="object-contain p-1"
+              />
             </div>
             <p className="text-[11px] font-semibold tracking-widest uppercase text-warm">Premium Shopping Experience</p>
             <CardTitle className="text-2xl font-bold">Create account</CardTitle>

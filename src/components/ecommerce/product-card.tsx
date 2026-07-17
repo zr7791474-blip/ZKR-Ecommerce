@@ -114,6 +114,11 @@ function ProductCardInner({ product }: ProductCardProps) {
     e.preventDefault();
     e.stopPropagation();
 
+    if (isDemo) {
+      toast.info('This is a preview item — browse the category to save real products.');
+      return;
+    }
+
     if (!requireAuth('save items to your wishlist')) return;
 
     if (inWishlist) {
@@ -162,6 +167,15 @@ function ProductCardInner({ product }: ProductCardProps) {
   const lowStock = typeof product.stock === 'number' && product.stock > 0 && product.stock <= 5;
   const outOfStock = typeof product.stock === 'number' && product.stock <= 0;
 
+  // Demo-catalog items (used to pad Trending/Related/Recommendations before
+  // the database has enough real products) don't reliably have a matching
+  // /products/[slug] page — send those to a filtered browse view instead of
+  // a link that 404s.
+  const isDemo = product.id.startsWith('demo-');
+  const detailHref = isDemo
+    ? `/products${product.category?.slug ? `?category=${product.category.slug}` : ''}`
+    : `/products/${product.slug}`;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -172,7 +186,7 @@ function ProductCardInner({ product }: ProductCardProps) {
       className="group relative rounded-3xl border border-foreground/[0.08] bg-foreground/[0.02] p-3 shadow-premium transition-colors duration-300 [transform-style:preserve-3d] hover:border-foreground/[0.14] hover:shadow-glow"
     >
       <div className="relative aspect-square rounded-2xl overflow-hidden bg-muted mb-3">
-        <Link href={`/products/${product.slug}`}>
+        <Link href={detailHref}>
           <Image
             src={image}
             alt={product.name}
@@ -227,7 +241,7 @@ function ProductCardInner({ product }: ProductCardProps) {
             />
           </Button>
 
-          <Link href={`/products/${product.slug}`}>
+          <Link href={detailHref}>
             <Button
               size="icon"
               variant="glass"
@@ -262,7 +276,7 @@ function ProductCardInner({ product }: ProductCardProps) {
         </div>
       </div>
 
-      <Link href={`/products/${product.slug}`}>
+      <Link href={detailHref}>
         <div className="space-y-1.5 px-1">
           {product.category?.name && (
             <p className="text-[11px] uppercase tracking-wide text-muted-foreground">

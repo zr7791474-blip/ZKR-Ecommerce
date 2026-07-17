@@ -175,7 +175,7 @@ export default async function AdminDashboard() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground">Welcome back! Here's what's happening.</p>
+        <p className="text-muted-foreground">Welcome back! Here&apos;s what&apos;s happening.</p>
       </div>
 
       {/* Stats Grid */}

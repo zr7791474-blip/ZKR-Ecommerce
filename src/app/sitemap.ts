@@ -36,21 +36,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === '' ? 1 : 0.8,
   }));
 
-  const productRoutes = products.map((product) => ({
+  const productRoutes = products.map((product: any) => ({
     url: `${baseUrl}/products/${product.slug}`,
     lastModified: product.updatedAt,
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));
 
-  const categoryRoutes = categories.map((category) => ({
+  const categoryRoutes = categories.map((category: any) => ({
     url: `${baseUrl}/categories/${category.slug}`,
     lastModified: category.updatedAt,
     changeFrequency: 'weekly' as const,
     priority: 0.6,
   }));
 
-  const blogRoutes = blogPosts.map((post) => ({
+  const blogRoutes = blogPosts.map((post: any) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: post.updatedAt,
     changeFrequency: 'monthly' as const,

@@ -25,6 +25,11 @@ export async function verifyPassword(
 
 export const authOptions: NextAuthOptions = {
 
+  // NextAuth v4 auto-reads NEXTAUTH_SECRET by default, but this project's
+  // .env uses AUTH_SECRET (the v5 convention) — without this explicit
+  // wiring, NextAuth would silently fail to pick up the configured secret.
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
+
   adapter: PrismaAdapter(prisma) as any,
 
   session: {

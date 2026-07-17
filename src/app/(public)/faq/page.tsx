@@ -48,7 +48,7 @@ export default function FaqPage() {
           Frequently Asked Questions
         </h1>
         <p className="text-muted-foreground">
-          Can't find what you're looking for?{' '}
+          Can&apos;t find what you&apos;re looking for?{' '}
           <a href="/contact" className="text-primary hover:underline">Contact our support team</a>.
         </p>
       </div>

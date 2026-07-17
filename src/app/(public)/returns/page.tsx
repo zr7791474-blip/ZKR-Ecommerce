@@ -44,7 +44,7 @@ export default function ReturnsPage() {
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">Refunds</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Once your return is received and inspected, we'll notify you by email and process your refund to the original payment method. Refunds typically appear within 5-7 business days, depending on your bank.
+            Once your return is received and inspected, we&apos;ll notify you by email and process your refund to the original payment method. Refunds typically appear within 5-7 business days, depending on your bank.
           </p>
         </section>
 

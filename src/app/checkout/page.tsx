@@ -81,7 +81,7 @@ export default function CheckoutPage() {
     [items]
   );
 
-  const shipping = items.length > 0 ? 10 : 0;
+  const shipping = items.length === 0 ? 0 : subtotal >= 100 ? 0 : 10;
   const tax = subtotal * 0.15;
   const total = subtotal + shipping + tax;
 
@@ -337,7 +337,7 @@ export default function CheckoutPage() {
 
             <p className="text-center text-xs text-muted-foreground flex items-center justify-center gap-1.5">
               <Lock className="w-3 h-3" />
-              Payment is completed on Stripe's secure, PCI-compliant checkout page.
+              Payment is completed on Stripe&apos;s secure, PCI-compliant checkout page.
             </p>
           </form>
         </div>

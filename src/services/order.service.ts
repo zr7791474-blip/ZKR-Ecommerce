@@ -40,7 +40,7 @@ export async function createOrder(data: {
   }
 
   const subtotal = cart.items.reduce(
-    (sum, item) => sum + Number(item.product.price) * item.quantity,
+    (sum: number, item: any) => sum + Number(item.product.price) * item.quantity,
     0
   );
 
@@ -60,7 +60,7 @@ export async function createOrder(data: {
   const shipping = subtotal > 100 ? 0 : 10; // Free shipping over $100
   const total = subtotal - discount + tax + shipping;
 
-  const order = await prisma.$transaction(async (tx) => {
+  const order = await prisma.$transaction(async (tx: any) => {
     const newOrder = await tx.order.create({
       data: {
         orderNumber: generateOrderNumber(),
@@ -76,7 +76,7 @@ export async function createOrder(data: {
         notes: data.notes,
         couponId: cart.couponId,
         items: {
-          create: cart.items.map((item) => ({
+          create: cart.items.map((item: any) => ({
             productId: item.productId,
             variantId: item.variantId,
             name: item.product.name,
@@ -229,7 +229,7 @@ export async function cancelOrder(orderNumber: string) {
     throw new AppError('Order cannot be cancelled');
   }
 
-  await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx: any) => {
     await tx.order.update({
       where: { id: order.id },
       data: { status: 'CANCELLED' },

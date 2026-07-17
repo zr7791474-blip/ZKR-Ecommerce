@@ -55,7 +55,7 @@ export function ProfileForm({
           <div className="space-y-1.5">
             <Label>Email</Label>
             <Input value={email} disabled />
-            <p className="text-xs text-muted-foreground">Your email is used to sign in and can't be changed here.</p>
+            <p className="text-xs text-muted-foreground">Your email is used to sign in and can&apos;t be changed here.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 gap-4">

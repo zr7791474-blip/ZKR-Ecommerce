@@ -36,7 +36,7 @@ export default function AdminSectionComingSoon({
           </div>
           <h1 className="text-xl font-bold text-foreground mb-1.5">{label} — Coming Soon</h1>
           <p className="text-sm text-muted-foreground mb-6">
-            This section of the admin panel hasn't been built yet. It's linked here as a placeholder so nothing 404s while it's in progress.
+            This section of the admin panel hasn&apos;t been built yet. It&apos;s linked here as a placeholder so nothing 404s while it&apos;s in progress.
           </p>
           <Button variant="outline" asChild>
             <Link href="/admin">

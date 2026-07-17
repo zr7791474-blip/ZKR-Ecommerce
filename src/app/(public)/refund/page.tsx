@@ -15,13 +15,13 @@ export default function RefundPage() {
         {
           heading: '1. When Refunds Are Issued',
           body: (
-            <p>Refunds are issued once your returned item has been received and inspected by our warehouse. You'll receive an email confirming your refund has been processed.</p>
+            <p>Refunds are issued once your returned item has been received and inspected by our warehouse. You&apos;ll receive an email confirming your refund has been processed.</p>
           ),
         },
         {
           heading: '2. Refund Method',
           body: (
-            <p>Refunds are always returned to the original payment method used at checkout. We're unable to issue refunds to a different card, account, or as store credit unless required by local law.</p>
+            <p>Refunds are always returned to the original payment method used at checkout. We&apos;re unable to issue refunds to a different card, account, or as store credit unless required by local law.</p>
           ),
         },
         {
@@ -33,7 +33,7 @@ export default function RefundPage() {
         {
           heading: '4. Shipping Costs',
           body: (
-            <p>Original shipping charges are non-refundable unless the return is due to our error (wrong or defective item). Return shipping costs are the customer's responsibility unless otherwise stated.</p>
+            <p>Original shipping charges are non-refundable unless the return is due to our error (wrong or defective item). Return shipping costs are the customer&apos;s responsibility unless otherwise stated.</p>
           ),
         },
         {
@@ -45,7 +45,7 @@ export default function RefundPage() {
         {
           heading: '6. Questions',
           body: (
-            <p>If your refund hasn't appeared within the expected timeframe, please <a href="/contact" className="text-primary hover:underline">contact our support team</a> with your order number.</p>
+            <p>If your refund hasn&apos;t appeared within the expected timeframe, please <a href="/contact" className="text-primary hover:underline">contact our support team</a> with your order number.</p>
           ),
         },
       ]}

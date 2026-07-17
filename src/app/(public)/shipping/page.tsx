@@ -38,21 +38,21 @@ export default function ShippingPage() {
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">Order Processing</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Orders are processed within 1 business day of payment confirmation. You'll receive an email confirmation as soon as your order ships, along with tracking information.
+            Orders are processed within 1 business day of payment confirmation. You&apos;ll receive an email confirmation as soon as your order ships, along with tracking information.
           </p>
         </section>
 
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">Tracking Your Order</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Once your order ships, you can follow its progress from the <a href="/track-order" className="text-primary hover:underline">Track Order</a> page, or from My Orders if you're signed in.
+            Once your order ships, you can follow its progress from the <a href="/track-order" className="text-primary hover:underline">Track Order</a> page, or from My Orders if you&apos;re signed in.
           </p>
         </section>
 
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">Delivery Issues</h2>
           <p className="text-muted-foreground leading-relaxed">
-            If your order is delayed, arrives damaged, or appears lost in transit, please <a href="/contact" className="text-primary hover:underline">contact our support team</a> and we'll make it right.
+            If your order is delayed, arrives damaged, or appears lost in transit, please <a href="/contact" className="text-primary hover:underline">contact our support team</a> and we&apos;ll make it right.
           </p>
         </section>
 

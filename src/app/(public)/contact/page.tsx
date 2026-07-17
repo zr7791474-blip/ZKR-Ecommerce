@@ -84,7 +84,7 @@ export default function ContactPage() {
           Get in Touch
         </h1>
         <p className="text-lg text-muted-foreground">
-          Have a question or feedback? We'd love to hear from you — reach out however's easiest.
+          Have a question or feedback? We&apos;d love to hear from you — reach out however&apos;s easiest.
         </p>
       </div>
 
@@ -128,7 +128,7 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 {isSuccess && (
                   <div className="p-4 rounded-xl bg-success/10 text-success border border-success/20 text-sm">
-                    Message sent successfully! We'll get back to you soon.
+                    Message sent successfully! We&apos;ll get back to you soon.
                   </div>
                 )}
                 {error && (

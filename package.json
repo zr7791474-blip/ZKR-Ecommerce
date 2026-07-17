@@ -1,6 +1,9 @@
 {
   "name": "zkr-ecommerce",
   "version": "1.0.0",
+  "description": "A production-ready, full-stack e-commerce platform built with Next.js, TypeScript, Prisma, PostgreSQL, NextAuth, and Stripe.",
+  "author": "Zakariaa Adli (ZKR)",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "next dev",

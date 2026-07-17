@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Lock } from 'lucide-react';
@@ -32,7 +33,7 @@ export default function CartPage() {
     0
   );
 
-  const shipping = items.length > 0 ? 10 : 0; // simple flat rate (safe placeholder)
+  const shipping = items.length === 0 ? 0 : subtotal >= 100 ? 0 : 10;
   const tax = subtotal * 0.15; // 15% simulated tax
   const total = subtotal + shipping + tax;
 
@@ -64,11 +65,16 @@ export default function CartPage() {
     <div className="relative max-w-6xl mx-auto py-10 md:py-14 px-4">
       <div className="absolute -top-20 left-1/4 h-[350px] w-[350px] rounded-full bg-primary/[0.06] blur-[110px] pointer-events-none" />
 
-      <div className="relative mb-8">
-        <h1 className="text-3xl font-bold text-foreground">Your Cart</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          {items.length} {items.length === 1 ? 'item' : 'items'} ready for checkout
-        </p>
+      <div className="relative mb-8 flex items-center gap-4">
+        <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+          <ShoppingBag className="w-5 h-5 text-primary" />
+        </div>
+        <div>
+          <h1 className="text-3xl font-bold text-foreground">Your Cart</h1>
+          <p className="text-muted-foreground text-sm mt-0.5">
+            {items.length} {items.length === 1 ? 'item' : 'items'} ready for checkout
+          </p>
+        </div>
       </div>
 
       <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -83,19 +89,30 @@ export default function CartPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.25 }}
-                className="flex items-center gap-4 rounded-2xl border border-border/60 bg-card p-4 shadow-sm hover:border-primary/30 transition-colors duration-300"
+                className="flex items-center gap-4 rounded-2xl border border-border/60 bg-card p-4 shadow-sm hover:shadow-premium hover:border-primary/30 hover:-translate-y-0.5 transition-all duration-300"
               >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-20 h-20 object-cover rounded-xl border border-border/60"
-                />
+                <div className="relative w-20 h-20 rounded-xl overflow-hidden border border-border/60 shrink-0">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    sizes="80px"
+                    className="object-cover"
+                  />
+                </div>
 
                 <div className="flex-1 min-w-0">
                   <h2 className="font-medium text-foreground line-clamp-1">{item.name}</h2>
-                  <p className="text-sm text-warm font-semibold mt-0.5">
-                    {formatPrice(item.price)}
-                  </p>
+                  <div className="flex items-baseline gap-2 mt-0.5">
+                    <p className="text-sm text-warm font-semibold">
+                      {formatPrice(item.price * item.quantity)}
+                    </p>
+                    {item.quantity > 1 && (
+                      <p className="text-xs text-muted-foreground">
+                        ({formatPrice(item.price)} each)
+                      </p>
+                    )}
+                  </div>
 
                   <div className="flex items-center gap-1 mt-2.5 w-fit rounded-full border border-border/60 bg-secondary/40 p-1">
                     <button
@@ -140,6 +157,20 @@ export default function CartPage() {
             </CardHeader>
 
             <CardContent className="space-y-2.5 text-sm">
+              {subtotal < 100 && (
+                <div className="mb-1 space-y-1.5">
+                  <p className="text-xs text-muted-foreground">
+                    Add <span className="text-warm font-medium">{formatPrice(100 - subtotal)}</span> more for free shipping
+                  </p>
+                  <div className="h-1.5 rounded-full bg-secondary/60 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-primary to-warm transition-all duration-500"
+                      style={{ width: `${Math.min(100, (subtotal / 100) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
               <div className="flex justify-between text-muted-foreground">
                 <span>Subtotal</span>
                 <span className="text-foreground">{formatPrice(subtotal)}</span>

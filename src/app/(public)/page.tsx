@@ -210,7 +210,7 @@ export default async function HomePage() {
               <Badge variant="glass" size="lg" className="border-white/20 bg-white/10 text-white">Limited Time</Badge>
               <h2 className="text-4xl md:text-5xl font-bold">Summer Sale</h2>
               <p className="text-lg md:text-xl text-white/80">
-                Up to 50% off on selected items. Don't miss out!
+                Up to 50% off on selected items. Don&apos;t miss out!
               </p>
               <Button size="lg" className="bg-white text-[#0F172A] hover:bg-white/90" asChild>
                 <Link href="/products?sale=true">
@@ -254,7 +254,7 @@ export default async function HomePage() {
             <div className="flex items-center justify-between mb-10">
               <div>
                 <h2 className="text-3xl font-bold text-foreground">Trending Now</h2>
-                <p className="text-muted-foreground mt-1.5">What everyone's buying this week</p>
+                <p className="text-muted-foreground mt-1.5">What everyone&apos;s buying this week</p>
               </div>
               <Button variant="outline" asChild>
                 <Link href="/products?sort=bestselling">
@@ -293,7 +293,7 @@ export default async function HomePage() {
                       <Star key={i} className="w-4 h-4 fill-warm text-warm" />
                     ))}
                   </div>
-                  <p className="text-foreground/90">"{testimonial.text}"</p>
+                  <p className="text-foreground/90">&quot;{testimonial.text}&quot;</p>
                   <div>
                     <p className="font-semibold text-foreground">{testimonial.name}</p>
                     <p className="text-sm text-muted-foreground">{testimonial.role}</p>
@@ -325,7 +325,7 @@ export default async function HomePage() {
         <div className="container mx-auto px-4 text-center space-y-6 relative">
           <h2 className="text-4xl font-bold text-foreground">Ready to Start Shopping?</h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Join thousands of satisfied customers and discover products you'll love.
+            Join thousands of satisfied customers and discover products you&apos;ll love.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
             <Button size="xl" asChild>

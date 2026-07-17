@@ -94,7 +94,7 @@ export default function ComparePage() {
                   <Image src={item.image} alt={item.name} fill className="object-cover" />
                 </div>
                 <Link
-                  href={`/products/${item.slug}`}
+                  href={item.productId.startsWith('demo-') ? '/products' : `/products/${item.slug}`}
                   className="font-medium text-foreground hover:text-primary transition-colors line-clamp-2 text-sm"
                 >
                   {item.name}
