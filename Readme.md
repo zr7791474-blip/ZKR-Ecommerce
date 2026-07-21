@@ -27,45 +27,31 @@ A modern full-stack e-commerce platform for browsing products, managing carts, a
 
 ---
 
-## Demo
 
-**Live Website:**  
-<LINK>
-
-**Admin Panel:**  
-<LINK>
-
-**API:**  
-<LINK>
 
 ### Demo Accounts
 
 | Role  | Email | Password |
 |------|------|----------|
-| Super Admin | admin@zkrecommerce.com | password123 |
-| Manager | manager@zkrecommerce.com | password123 |
-| Employee | employee@zkrecommerce.com | password123 |
-| Customer | customer@zkrecommerce.com | password123 |
+| Super Admin | admin@zkrstore.com | Admin123! |
+| Customer | customer@zkrstore.com | Customer123! |
+| Viewer (Employee) | viewer@zkrstore.com | Viewer123! |
 
 ---
 
 ## Screenshots
 
-| Home Page | Product Listing |
+| Hero Section | Featured Products |
 |----------|----------|
-| ![Home Page](screenshots/home.JPG) | ![Product Listing](screenshots/products.JPG) |
+| ![Hero](screenshots/Hero.JPG) | ![Featured Products](screenshots/Featured%20Products.JPG) |
 
-| Product Details | Cart & Checkout |
+| Products Listing | Blog |
 |----------|----------|
-| ![Product Details](screenshots/product-detail.JPG) | ![Cart](screenshots/cart.JPG) |
+| ![Products](screenshots/Products.JPG) | ![Blog](screenshots/Blog.JPG) |
 
-| User Dashboard | Admin Dashboard |
+| Login | Register |
 |----------|----------|
-| ![Dashboard](screenshots/dashboard.JPG) | ![Admin](screenshots/admin.JPG) |
-
-| Authentication | Mobile View |
-|----------|----------|
-| ![Auth](screenshots/auth.JPG) | ![Mobile](screenshots/mobile.JPG) |
+| ![Login](screenshots/Login.JPG) | ![Register](screenshots/Register.JPG) |
 
 ---
 
@@ -221,7 +207,7 @@ ZKR-Ecommerce/
 │   ├── logo/
 │   ├── products/
 │   └── screenshots/
-├── src/
+── src/
 │   ├── app/
 │   │   ├── (public)/          # Storefront pages
 │   │   ├── (auth)/            # Login, register, password reset
@@ -235,12 +221,12 @@ ZKR-Ecommerce/
 │   │   ├── admin/             # Admin dashboard widgets
 │   │   ├── account/           # Profile forms
 │   │   ├── layout/            # Navbar, footer, mobile menu
-│   │   ── legal/             # Legal page layouts
+│   │   └── legal/             # Legal page layouts
 │   ├── services/              # Server actions (Prisma access)
 │   ├── stores/                # Zustand stores (cart, wishlist)
 │   ├── hooks/                 # Shared client hooks
 │   ├── lib/                   # Auth config, email, validation
-│   ── middleware.ts
+│   └── middleware.ts
 └── package.json
 ```
 
