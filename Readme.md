@@ -1,4 +1,3 @@
-```markdown
 # ZKR E-Commerce
 
 A modern full-stack e-commerce platform for browsing products, managing carts, and processing payments. Built with a scalable architecture using Next.js 14 App Router, Prisma, PostgreSQL, and NextAuth.
@@ -6,7 +5,7 @@ A modern full-stack e-commerce platform for browsing products, managing carts, a
 ---
 
 <p align="center">
-  <img src="public\logo.png" alt="ZKR E-Commerce Logo" width="140" />
+  <img src="public/logo.png" alt="ZKR E-Commerce Logo" width="140" />
 </p>
 
 <p align="center">
@@ -27,7 +26,16 @@ A modern full-stack e-commerce platform for browsing products, managing carts, a
 
 ---
 
+## Demo
 
+**Live Website:**  
+<LINK>
+
+**Admin Panel:**  
+<LINK>
+
+**API:**  
+<LINK>
 
 ### Demo Accounts
 
@@ -202,12 +210,12 @@ ZKR-Ecommerce/
 ├── prisma/
 │   ├── schema.prisma
 │   ├── migrations/
-│   ── seed.ts
+│   └── seed.ts
 ├── public/
 │   ├── logo/
 │   ├── products/
 │   └── screenshots/
-── src/
+├── src/
 │   ├── app/
 │   │   ├── (public)/          # Storefront pages
 │   │   ├── (auth)/            # Login, register, password reset
@@ -555,4 +563,3 @@ For inquiries or support:
 ---
 
 <p align="center">Made with ❤️ by ZKR</p>
-```
